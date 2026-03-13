@@ -21,12 +21,12 @@ export default function Sidebar() {
           </li>
           <li>
             <Link href="/cronograma" className={styles.menuItem}>
-              <span className={styles.menuIcon}>◫</span> Modelado de Horarios
+              <span className={styles.menuIcon}>◫</span> Cronograma
             </Link>
           </li>
           <li>
             <Link href="/plan-estudios" className={styles.menuItem}>
-              <span className={styles.menuIcon}>⎈</span> Seguimiento Curricular
+              <span className={styles.menuIcon}>⎈</span> Plan de Estudios
             </Link>
           </li>
           <li>

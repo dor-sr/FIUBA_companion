@@ -1,8 +1,8 @@
 .container {
-  padding: 40px 48px;
+  padding: 20px 32px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   height: 100vh;
 }
 

@@ -249,6 +249,13 @@
   background: rgba(255, 215, 0, 0.05);
 }
 
+.node.hoveredPrereqPassed {
+  border-color: rgba(30, 215, 96, 0.8);
+  box-shadow: 0 0 15px rgba(30, 215, 96, 0.3);
+  transform: translateY(-2px);
+  background: rgba(30, 215, 96, 0.1);
+}
+
 .node.hoveredPostreq {
   border-color: #00e5ff;
   box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);

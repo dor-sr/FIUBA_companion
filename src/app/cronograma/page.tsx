@@ -434,7 +434,10 @@ export default function CronogramaPage() {
                       <div 
                         key={course.code} 
                         className={styles.dropdownItem}
-                        onClick={() => handleAddCourse(course)}
+                        onMouseDown={(e) => { 
+                          e.preventDefault(); 
+                          handleAddCourse(course); 
+                        }}
                       >
                         <div className={styles.dropdownInfo}>
                           <span className={styles.dropdownCode}>{course.code}</span>

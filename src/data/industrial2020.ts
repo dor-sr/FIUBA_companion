@@ -17,7 +17,7 @@ const CBC_IDS = ['CBC-24', 'CBC-40', 'CBC-66', 'CBC-62', 'CBC-03', 'CBC-90'];
 export const industrial2020: AcademicPeriod[] = [
   {
     id: 'CBC',
-    title: 'Primer Ciclo (CBC)',
+    title: 'CBC',
     subjects: [
       { id: 'CBC-24', name: 'Introducción al Conocimiento de la Sociedad y el Estado', credits: 4, correlatives: [] },
       { id: 'CBC-40', name: 'Introducción al Pensamiento Científico', credits: 4, correlatives: [] },
@@ -29,7 +29,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q3',
-    title: 'Tercer Cuatrimestre',
+    title: 'Cuatri #3',
     subjects: [
       { id: 'AM2', name: 'Análisis Matemático II', credits: 8, correlatives: CBC_IDS },
       { id: 'FSP', name: 'Física de los Sistemas de Partículas', credits: 6, correlatives: CBC_IDS },
@@ -38,7 +38,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q4',
-    title: 'Cuarto Cuatrimestre',
+    title: 'Cuatri #4',
     subjects: [
       { id: 'AL', name: 'Álgebra Lineal', credits: 8, correlatives: CBC_IDS },
       { id: 'QB', name: 'Química Básica', credits: 6, correlatives: CBC_IDS },
@@ -48,7 +48,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q5',
-    title: 'Quinto Cuatrimestre',
+    title: 'Cuatri #5',
     subjects: [
       { id: 'PROB', name: 'Probabilidad', credits: 6, correlatives: ['AM2'] },
       { id: 'ECO', name: 'Economía', credits: 6, correlatives: ['AM2', 'PII'] },
@@ -58,7 +58,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q6',
-    title: 'Sexto Cuatrimestre',
+    title: 'Cuatri #6',
     subjects: [
       { id: 'EyM', name: 'Electricidad y Magnetismo', credits: 6, correlatives: ['AM2', 'FSP'] },
       { id: 'DE', name: 'Desarrollo Económico', credits: 4, correlatives: ['ECO'] },
@@ -68,7 +68,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q7',
-    title: 'Séptimo Cuatrimestre',
+    title: 'Cuatri #7',
     subjects: [
       { id: 'EMIE', name: 'Electrotecnia, Máquinas e Instalaciones Eléctricas', credits: 6, correlatives: ['EyM'] },
       { id: 'IO', name: 'Investigación Operativa', credits: 8, correlatives: ['AL', 'PROB'] },
@@ -79,7 +79,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q8',
-    title: 'Octavo Cuatrimestre',
+    title: 'Cuatri #8',
     subjects: [
       { id: 'IE', name: 'Ingeniería Económica', credits: 4, correlatives: ['DE', 'SCGC'] },
       { id: 'ESAI', name: 'Equipos y Sistemas para Automatización Industrial', credits: 6, correlatives: ['EMIE', 'MA1'] },
@@ -90,7 +90,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q9',
-    title: 'Noveno Cuatrimestre',
+    title: 'Cuatri #9',
     subjects: [
       { id: 'IExtr', name: 'Industrias Extractivas', credits: 4, correlatives: ['TE', 'MA1'] },
       { id: 'PI', name: 'Proyecto Industrial', credits: 8, correlatives: ['EMIE', 'MA1', 'TE', 'HyS', 'IASCP'] },
@@ -100,7 +100,7 @@ export const industrial2020: AcademicPeriod[] = [
   },
   {
     id: 'Q10',
-    title: 'Décimo Cuatrimestre',
+    title: 'Cuatri #10',
     subjects: [
       { id: 'LEP', name: 'Legislación y Ejercicio Profesional', credits: 2, correlatives: ['CRED-100'] },
       { id: 'TP_TESIS', name: 'Trabajo Profesional / Tesis', credits: 12, correlatives: ['CRED-140'] },

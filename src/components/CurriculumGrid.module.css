@@ -88,24 +88,24 @@
 .timeline {
   display: flex;
   flex-direction: row;
-  gap: 2.5rem;
+  gap: 1rem;
   padding: 1rem 0;
   width: max-content;
-  min-height: 400px; /* Give room for column stacking */
+  min-height: 400px;
 }
 
 .periodColumn {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 250px; /* Fixed column width for map aesthetic */
+  gap: 0.75rem;
+  width: 170px; /* Highly compact column width */
 }
 
 .periodTitle {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--text-secondary);
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
   border-bottom: 1px solid var(--border);
   text-align: center;
   text-transform: uppercase;
@@ -115,70 +115,20 @@
 .nodesContainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 /* Standard Node styles */
 .node {
   display: flex;
   flex-direction: column;
-  padding: 1.25rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  position: relative;
-  overflow: visible; /* Required for tooltip */
-  user-select: none;
-  min-height: 120px;
-}
-
-/* Minimized Passed Node Style */
-.node.minimized {
-  min-height: auto;
-  padding: 0.5rem 1rem;
-  border-radius: 20px; /* Pill shape */
-  justify-content: center;
-  align-items: center;
-  margin-bottom: -0.5rem; /* Tighter packing for passed items */
-}
-
-.node.minimized .nodeHeader {
-  margin-bottom: 0;
-}
-
-.node.minimized .nodeId {
-  background: transparent;
-  padding: 0;
-  color: var(--success);
-  font-size: 0.9rem;
-}
-
-/* Tooltip for minimized nodes */
-.customTooltip {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  background: rgba(20, 20, 20, 0.95);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 8px;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  z-index: 100;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
-
-.node.minimized:hover .customTooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  user-select: none;
+  min-height: 75px;
 }
 
 .node::before {
@@ -187,7 +137,7 @@
   top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .node:hover::before {
@@ -198,36 +148,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.3rem;
 }
 
 .nodeId {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   color: var(--text-secondary);
-  background: rgba(0,0,0,0.2);
-  padding: 0.2rem 0.5rem;
+  background: rgba(0,0,0,0.25);
+  padding: 0.15rem 0.35rem;
   border-radius: 4px;
 }
 
 .nodeCredits {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
 .nodeName {
-  font-size: 1.05rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--text);
-  line-height: 1.3;
-  margin-bottom: 1rem;
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
   flex-grow: 1;
 }
 
 .nodeStatus {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.6rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: auto;

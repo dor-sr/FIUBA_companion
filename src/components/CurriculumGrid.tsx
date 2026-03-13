@@ -112,7 +112,6 @@ export default function CurriculumGrid({ curriculum }: CurriculumGridProps) {
               <div className={styles.nodesContainer}>
                 {period.subjects.map((subject) => {
                   const state = getSubjectState(subject);
-                  const isMinimized = state === 'passed';
                   
                   return (
                     <div
@@ -121,26 +120,13 @@ export default function CurriculumGrid({ curriculum }: CurriculumGridProps) {
                       onClick={() => handleNodeClick(subject)}
                       onMouseEnter={() => setHoveredSubjectId(subject.id)}
                       onMouseLeave={() => setHoveredSubjectId(null)}
-                      title={isMinimized ? `${subject.id} - ${subject.name}` : undefined}
                     >
                       <div className={styles.nodeHeader}>
                         <span className={styles.nodeId}>{subject.id}</span>
-                        {!isMinimized && <span className={styles.nodeCredits}>{subject.credits} CR</span>}
+                        <span className={styles.nodeCredits}>{subject.credits} CR</span>
                       </div>
-
-                      {!isMinimized && (
-                        <>
-                          <div className={styles.nodeName}>{subject.name}</div>
-                          <div className={styles.nodeStatus}>{getSubTitleClass(state)}</div>
-                        </>
-                      )}
-                      
-                      {/* Custom Tooltip for minimized nodes created using CSS on hover */}
-                      {isMinimized && (
-                        <div className={styles.customTooltip}>
-                          <strong>{subject.id}</strong> {subject.name}
-                        </div>
-                      )}
+                      <div className={styles.nodeName}>{subject.name}</div>
+                      <div className={styles.nodeStatus}>{getSubTitleClass(state)}</div>
                     </div>
                   );
                 })}

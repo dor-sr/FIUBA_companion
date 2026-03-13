@@ -197,20 +197,21 @@
 .node.passed .nodeStatus { color: var(--success); }
 
 .node.inProgress {
-  background: rgba(138, 43, 226, 0.08); /* Primary tint */
-  border-color: rgba(138, 43, 226, 0.4);
+  background: rgba(138, 43, 226, 0.2); /* Higher contrast */
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.1);
 }
 .node.inProgress.hoveredMain,
 .node.inProgress:hover {
-  border-color: rgba(138, 43, 226, 0.8);
+  border-color: rgba(138, 43, 226, 1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2);
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
 }
 .node.inProgress .nodeStatus { color: var(--primary); }
 
 .node.available {
-  background: var(--surface);
-  border-color: var(--border);
+  background: rgba(255, 255, 255, 0.04); /* Distinct surface */
+  border-color: rgba(255, 255, 255, 0.2);
 }
 .node.available.hoveredMain,
 .node.available:hover {
@@ -221,14 +222,14 @@
 .node.available .nodeStatus { color: var(--text-secondary); }
 
 .node.locked {
-  background: rgba(0, 0, 0, 0.2);
-  border-color: transparent;
-  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px dashed rgba(255, 255, 255, 0.05); /* Dashed to signify locked */
+  opacity: 0.3;
   cursor: not-allowed;
 }
 .node.locked.hoveredMain,
 .node.locked:hover {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.5);
 }
 .node.locked .nodeName, .node.locked .nodeId {
   color: var(--text-secondary);

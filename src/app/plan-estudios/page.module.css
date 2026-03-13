@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem 1rem;
+  z-index: 10;
+}
+
+.titleSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.careerInfo {
+  display: flex;
+  align-items: center;
+}
+
+.careerBadge {
+  background: rgba(var(--primary-rgb), 0.15);
+  color: var(--primary);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
+}
+
+.mainContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Custom scrollbar for mainContent to ensure aesthetics */
+.mainContent::-webkit-scrollbar {
+  width: 8px;
+}
+.mainContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mainContent::-webkit-scrollbar-thumb {
+  background: var(--surface-hover);
+  border-radius: 4px;
+}
+.mainContent::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import styles from './CurriculumGrid.module.css';
 import { Subject, AcademicPeriod } from '../data/industrial2020';

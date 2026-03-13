@@ -33,6 +33,96 @@
   align-items: center;
 }
 
+.actionDropdownContainer {
+  position: relative;
+}
+
+.actionDropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--surface-border-highlight);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  min-width: 200px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.dropdownActionBtn {
+  background: transparent;
+  border: none;
+  padding: 10px 16px;
+  color: var(--text-primary);
+  text-align: left;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdownActionBtn:hover {
+  background: var(--surface-hover);
+  color: var(--accent-primary);
+}
+
+.planSelector {
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid var(--surface-border);
+}
+
+.planBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.planBtn.activePlan {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--text-primary);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
+}
+
+.planBtn:hover:not(.activePlan) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.addPlanBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addPlanBtn:hover {
+  color: var(--accent-primary);
+}
 .primaryBtn, .secondaryBtn {
   padding: 12px 24px;
   border-radius: 12px;

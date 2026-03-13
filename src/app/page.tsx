@@ -28,7 +28,7 @@ export default function Home() {
             <div className={styles.iconWrapper}>
               <span className={styles.icon}>🎓</span>
             </div>
-            <h3>Seguimiento Curricular</h3>
+            <h3>Plan de Estudios</h3>
           </div>
           <p>Analiza el estado de tu plan de estudios. Calcula promedios simulados, visualiza correlatividades y proyecta tu graduación con precisión estadística.</p>
           <button className={styles.secondaryButton}>Ver Plan de Estudios</button>

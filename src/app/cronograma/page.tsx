@@ -168,6 +168,31 @@ export default function CronogramaPage() {
     }
   };
 
+  const handleClearPlan = () => {
+    if (window.confirm(`¿Estás seguro de que deseas quitar todas las materias del "${activePlan?.name}"?`)) {
+      setPlans(prevPlans => prevPlans.map(p => {
+        if (p.id === activePlanId) {
+          return { ...p, selectedCourses: [], selectedCommissions: {} };
+        }
+        return p;
+      }));
+    }
+    setIsActionMenuOpen(false);
+  };
+
+  const handleDeletePlan = () => {
+    if (plans.length <= 1) {
+      alert("No puedes eliminar el único plan que tienes. Puedes vaciarlo en su lugar.");
+      return;
+    }
+    if (window.confirm(`¿Estás seguro de que deseas eliminar permanentemente el "${activePlan?.name}"?`)) {
+      const remaining = plans.filter(p => p.id !== activePlanId);
+      setPlans(remaining);
+      setActivePlanId(remaining[0].id);
+    }
+    setIsActionMenuOpen(false);
+  };
+
   const parseTimeToDecimal = (timeStr: string) => {
     if (!timeStr) return 0;
     const [hours, minutes] = timeStr.split(':').map(Number);
@@ -360,6 +385,14 @@ export default function CronogramaPage() {
                 <button className={styles.dropdownActionBtn} onClick={() => setIsModalOpen(true)}>
                   📥 Importar SIU
                 </button>
+                <button className={styles.dropdownActionBtn} onClick={handleClearPlan} style={{ color: '#ef4444' }}>
+                  🗑️ Vaciar Plan
+                </button>
+                {plans.length > 1 && (
+                  <button className={styles.dropdownActionBtn} onClick={handleDeletePlan} style={{ color: '#ef4444' }}>
+                    ❌ Eliminar Plan
+                  </button>
+                )}
                 <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '4px 0' }} />
                 <button className={styles.dropdownActionBtn} onClick={handleExportPNG}>
                   🖼️ Exportar como Imagen

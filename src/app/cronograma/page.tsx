@@ -8,11 +8,21 @@ import { defaultCourses } from '@/data/defaultCourses';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
+export interface CustomSlot {
+  id: string;
+  day: string;
+  startHour: number;
+  durationHours: number;
+  title: string;
+}
+
 interface Plan {
   id: string;
   name: string;
   selectedCourses: ParsedCourse[];
   selectedCommissions: Record<string, string>;
+  hiddenEvents?: string[];
+  customSlots?: CustomSlot[];
 }
 
 export default function CronogramaPage() {
@@ -30,6 +40,7 @@ export default function CronogramaPage() {
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const scheduleRef = useRef<HTMLDivElement>(null);
 
@@ -56,14 +67,20 @@ export default function CronogramaPage() {
       
       if (storedPlans) {
         const parsedPlans = JSON.parse(storedPlans);
-        setPlans(parsedPlans);
-        if (storedActivePlan && parsedPlans.find((p: Plan) => p.id === storedActivePlan)) {
+        // Ensure backwards compatibility
+        const migratedPlans = parsedPlans.map((p: any) => ({
+          ...p,
+          hiddenEvents: p.hiddenEvents || [],
+          customSlots: p.customSlots || []
+        }));
+        setPlans(migratedPlans);
+        if (storedActivePlan && migratedPlans.find((p: Plan) => p.id === storedActivePlan)) {
           setActivePlanId(storedActivePlan);
         } else {
-          setActivePlanId(parsedPlans[0].id);
+          setActivePlanId(migratedPlans[0].id);
         }
       } else {
-        const initialPlan: Plan = { id: 'plan-1', name: 'Plan 1', selectedCourses: [], selectedCommissions: {} };
+        const initialPlan: Plan = { id: 'plan-1', name: 'Plan 1', selectedCourses: [], selectedCommissions: {}, hiddenEvents: [], customSlots: [] };
         setPlans([initialPlan]);
         setActivePlanId('plan-1');
         localStorage.setItem('fiuba_plans', JSON.stringify([initialPlan]));
@@ -155,8 +172,50 @@ export default function CronogramaPage() {
   const addNewPlan = () => {
     const newId = `plan-${Date.now()}`;
     const newPlanName = `Plan ${plans.length + 1}`;
-    setPlans([...plans, { id: newId, name: newPlanName, selectedCourses: [], selectedCommissions: {} }]);
+    setPlans([...plans, { id: newId, name: newPlanName, selectedCourses: [], selectedCommissions: {}, hiddenEvents: [], customSlots: [] }]);
     setActivePlanId(newId);
+  };
+
+  const handleEventClick = (eventId: string) => {
+    setPlans(prevPlans => prevPlans.map(p => {
+      if (p.id === activePlanId) {
+        const currentHidden = p.hiddenEvents || [];
+        const newHidden = currentHidden.includes(eventId)
+          ? currentHidden.filter(id => id !== eventId)
+          : [...currentHidden, eventId];
+        return { ...p, hiddenEvents: newHidden };
+      }
+      return p;
+    }));
+  };
+
+  const handleSlotCreate = (day: string, startHour: number, durationHours: number) => {
+    const title = window.prompt("Nombre de la actividad:", "Otros");
+    if (!title) return; // User cancelled
+
+    const newSlot: CustomSlot = {
+      id: `custom-${Date.now()}`,
+      day,
+      startHour,
+      durationHours,
+      title
+    };
+
+    setPlans(prevPlans => prevPlans.map(p => {
+      if (p.id === activePlanId) {
+        return { ...p, customSlots: [...(p.customSlots || []), newSlot] };
+      }
+      return p;
+    }));
+  };
+
+  const handleRemoveCustomSlot = (slotId: string) => {
+    setPlans(prevPlans => prevPlans.map(p => {
+      if (p.id === activePlanId) {
+        return { ...p, customSlots: (p.customSlots || []).filter(s => s.id !== slotId) };
+      }
+      return p;
+    }));
   };
 
   const handleRenamePlan = (planId: string, currentName: string) => {
@@ -253,6 +312,20 @@ export default function CronogramaPage() {
       });
     });
 
+    // Add custom slots
+    (activePlan?.customSlots || []).forEach(slot => {
+      rawEvents.push({
+        id: slot.id,
+        day: slot.day,
+        startHour: slot.startHour,
+        durationHours: slot.durationHours,
+        title: slot.title,
+        subtitle: 'Actividad Personalizada',
+        colorGradient: 'linear-gradient(135deg, #4b5563, #6b7280)', // Gray color
+        isCustom: true
+      });
+    });
+
     // Handle overlaps and assign column indices
     const overlappedEvents: ScheduleEvent[] = [];
     const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -308,7 +381,7 @@ export default function CronogramaPage() {
     });
 
     return overlappedEvents;
-  }, [selectedCourses, selectedCommissions]);
+  }, [selectedCourses, selectedCommissions, activePlan?.customSlots]);
 
   // Export Logic
   const handleExportPNG = async () => {
@@ -408,12 +481,30 @@ export default function CronogramaPage() {
       
       <div className={styles.content}>
         <div className={styles.mainContent} ref={scheduleRef}>
-          <ScheduleGrid events={scheduleEvents} />
+          <ScheduleGrid 
+            events={scheduleEvents} 
+            hiddenEventIds={activePlan?.hiddenEvents || []}
+            onEventClick={handleEventClick}
+            onSlotCreate={handleSlotCreate}
+          />
         </div>
-        <aside className={styles.sidePanel}>
+        <aside className={`${styles.sidePanel} ${!isSidebarOpen ? styles.collapsed : ''}`}>
           <div className={`glass-card ${styles.card}`}>
-            <h3 className={styles.panelTitle}>Materias Seleccionadas</h3>
-            {/* Custom Search Bar */}
+            <div className={styles.panelHeader}>
+              {!isSidebarOpen ? null : <h3 className={styles.panelTitle}>Materias Seleccionadas</h3>}
+              <button 
+                className={styles.toggleSidebarBtn} 
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                title={isSidebarOpen ? "Ocultar panel" : "Mostrar panel"}
+                style={{ margin: !isSidebarOpen ? '0 auto' : '0' }}
+              >
+                {isSidebarOpen ? '▶' : '◀'}
+              </button>
+            </div>
+
+            {isSidebarOpen && (
+              <>
+                {/* Custom Search Bar */}
             <div 
               className={styles.searchContainer} 
               onFocus={() => setIsSearchFocused(true)} 
@@ -530,7 +621,60 @@ export default function CronogramaPage() {
                   </div>
                 ))
               )}
+              
+              {/* Custom Slots Section in Sidebar */}
+              {(activePlan?.customSlots && activePlan.customSlots.length > 0) && (
+                <div className={styles.courseItemContainer} style={{ marginTop: '16px' }}>
+                  <li 
+                    className={styles.courseItem} 
+                    onClick={() => toggleCourseExpand('custom-slots')}
+                  >
+                    <div className={styles.courseColor} style={{ background: 'linear-gradient(135deg, #4b5563, #6b7280)', boxShadow: '0 0 10px rgba(255,255,255,0.1)' }}></div>
+                    <div className={styles.courseInfo}>
+                      <p className={styles.courseName}>Otros</p>
+                      <p className={styles.courseCode}>
+                        Actividades Personalizadas • {activePlan.customSlots.length} items
+                      </p>
+                    </div>
+                  </li>
+                  
+                  {expandedCourse === 'custom-slots' && (
+                    <div className={styles.commissionsList}>
+                      {activePlan.customSlots.map(slot => (
+                        <div key={slot.id} className={styles.commissionItem} style={{ borderLeft: '3px solid #6b7280' }}>
+                          <div className={styles.commissionHeader}>
+                            <div className={styles.commissionTitleGroup}>
+                              <span className={styles.commissionName}>{slot.title}</span>
+                            </div>
+                            <button 
+                              className={styles.removeBtn}
+                              onClick={(e) => { e.stopPropagation(); handleRemoveCustomSlot(slot.id); }}
+                              title="Quitar actividad"
+                              style={{ transform: 'none' }}
+                            >
+                              ×
+                            </button>
+                          </div>
+                          <div className={styles.commissionClasses}>
+                            <span className={styles.classBadge}>
+                              <strong className={styles.dayStr}>{slot.day.slice(0, 2)}</strong> {Math.floor(slot.startHour)}:00 - {Math.floor(slot.startHour + slot.durationHours)}:00
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </ul>
+              </>
+            )}
+            
+            {!isSidebarOpen && (
+              <div className={styles.collapsedContent}>
+                <span className={styles.collapsedVerticalText}>MATERIAS</span>
+              </div>
+            )}
           </div>
         </aside>
       </div>

@@ -13,6 +13,7 @@
 .scheduleGrid {
   display: grid;
   min-width: 800px;
+  min-height: 100%;
 }
 
 .timeColumnHeader, .dayHeader {
@@ -33,6 +34,30 @@
   border-left: 1px solid var(--surface-border);
 }
 
+.userRole {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.crossedOut {
+  opacity: 0.4;
+  filter: grayscale(80%);
+  text-decoration: line-through;
+}
+
+.ghostBlock {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 10;
+}
+
 .timeCell {
   padding: 8px 12px;
   text-align: right;
@@ -47,14 +72,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  height: 38px;
   border-right: 1px solid var(--surface-border);
 }
 
 .gridCell {
   border-bottom: 1px solid var(--surface-border);
   border-left: 1px solid var(--surface-border);
-  height: 38px;
   position: relative;
   transition: background var(--transition-fast);
 }

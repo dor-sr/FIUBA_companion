@@ -1,8 +1,13 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styles from './Sidebar.module.css';
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className={`${styles.sidebar} glass-panel`}>
       <div className={styles.header}>
@@ -15,22 +20,22 @@ export default function Sidebar() {
         <div className={styles.navSection}>PRINCIPAL</div>
         <ul className={styles.menuList}>
           <li>
-            <Link href="/" className={`${styles.menuItem} ${styles.active}`}>
+            <Link href="/" className={`${styles.menuItem} ${pathname === '/' ? styles.active : ''}`}>
               <span className={styles.menuIcon}>⌂</span> Inicio
             </Link>
           </li>
           <li>
-            <Link href="/cronograma" className={styles.menuItem}>
+            <Link href="/cronograma" className={`${styles.menuItem} ${pathname.startsWith('/cronograma') ? styles.active : ''}`}>
               <span className={styles.menuIcon}>◫</span> Cronograma
             </Link>
           </li>
           <li>
-            <Link href="/plan-estudios" className={styles.menuItem}>
+            <Link href="/plan-estudios" className={`${styles.menuItem} ${pathname.startsWith('/plan-estudios') ? styles.active : ''}`}>
               <span className={styles.menuIcon}>⎈</span> Plan de Estudios
             </Link>
           </li>
           <li>
-            <Link href="/calendario" className={styles.menuItem}>
+            <Link href="/calendario" className={`${styles.menuItem} ${pathname.startsWith('/calendario') ? styles.active : ''}`}>
               <span className={styles.menuIcon}>🗓</span> Agenda Académica
             </Link>
           </li>
